@@ -3,7 +3,13 @@ import { prisma } from '@/lib/prisma'
 import Link from 'next/link';
 import { deleteSnippet } from '@/actions';
 
-export default async function SnippetPage({ params }: { params: { id: string } }) {
+type PageProps = {
+  params: Promise<{
+    id: string;
+  }>;
+};
+
+export default async function SnippetPage({ params }:PageProps) {
   const id = parseInt((await params).id);
 
   await new Promise((r)=>setTimeout(r,2000))
@@ -38,4 +44,9 @@ export default async function SnippetPage({ params }: { params: { id: string } }
         <code>{snippet.code}</code></pre>
     </div>
   )
+}
+
+export const generateStaticParams = async () => {
+  const snippets = await prisma.snippets.findMany();
+  return snippets.map(snippet => ({ id: snippet.id.toString() }));
 }

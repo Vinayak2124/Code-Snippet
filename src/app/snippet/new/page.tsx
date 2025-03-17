@@ -4,13 +4,12 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { prisma } from '@/lib/prisma'
-import { redirect } from 'next/navigation'
+
 import * as actions from "@/actions"
 
 import React, { useActionState } from 'react'
 
-function page() {
+function Page() {
     const [formStateData,action] = useActionState(actions.createSnippet, {message:""})
 
     return (
@@ -33,4 +32,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
